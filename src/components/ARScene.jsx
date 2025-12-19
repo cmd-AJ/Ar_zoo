@@ -42,17 +42,15 @@ export default function ARScene() {
   }, []);
 
   return (
-    <a-scene
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
-      vr-mode-ui="enabled: false"
-      renderer="logarithmicDepthBuffer: true;"
-    >
-      {/* CRITICAL FIX: 
-         The models must be inside this <a-marker> tag to stick to the image. 
-      */}
+    <a-scene 
+    embedded 
+    arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'
+    vr-mode-ui="enabled: false"
+    renderer="logarithmicDepthBuffer: true;">
+
+
       <a-marker 
-        preset="hiro"
+        type="pattern" url="https://192.168.134.89:5173/capibara.patt"
         smooth="true"
         smoothCount="10"
         smoothTolerance="0.01"
@@ -88,7 +86,7 @@ export default function ARScene() {
 
       </a-marker>
 
-      <a-entity camera></a-entity>
+      <a-entity camera fov="80"></a-entity>
     </a-scene>
   );
 }
