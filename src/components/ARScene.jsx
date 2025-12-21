@@ -1,20 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useGame } from "./Gamecontext";
 
-export default function ARScene() {
-  useEffect(() => {
-    // 1. REGISTER COMPONENT
+export default function ARScene({ path, animalPaths = [] }) {
+  const sceneRef = useRef(null);
+  const { handleDinoFound } = useGame();
+
+  // We use this to keep track of listeners to remove them later
+  const targetsRef = useRef([]);
+
+  
+
+useEffect(() => {
+    // ---------------------------------------------------------
+    // 1. REGISTER "MAKE-UNLIT" COMPONENT (NEW CODE)
+    // ---------------------------------------------------------
     if (typeof window !== "undefined" && window.AFRAME) {
-      if (!window.AFRAME.components["fix-visibility"]) {
-        window.AFRAME.registerComponent("fix-visibility", {
+      if (!window.AFRAME.components["make-unlit"]) {
+        window.AFRAME.registerComponent("make-unlit", {
           init: function () {
             this.el.addEventListener("model-loaded", () => {
               const obj = this.el.getObject3D("mesh");
               if (!obj) return;
 
               obj.traverse((node) => {
-                if (node.isMesh) {
-                  node.material.side = window.AFRAME.THREE.DoubleSide;
-                  node.frustumCulled = false;
+                if (node.isMesh && node.material) {
+                  // 1. Grab original texture
+                  const texture = node.material.map;
+                  const color = node.material.color;
+
+                  // 2. Create a cheap "Basic" material (no lights needed)
+                  const newMat = new window.AFRAME.THREE.MeshBasicMaterial({
+                    color: color, 
+                    map: texture,
+                    side: window.AFRAME.THREE.DoubleSide,
+                    transparent: node.material.transparent,
+                    alphaTest: 0.5 
+                  });
+
+                  // 3. Fix encoding if texture exists
+                  if (texture) {
+                    texture.encoding = window.AFRAME.THREE.sRGBEncoding;
+                  }
+
+                  node.material = newMat;
                 }
               });
             });
@@ -22,71 +50,100 @@ export default function ARScene() {
         });
       }
     }
+    // ---------------------------------------------------------
 
-    // 2. RENDER ORDER LOGIC
-    // Note: This needs the elements to exist in the DOM. 
-    // If this fails, we might need a small setTimeout or the improved component approach.
-    const portal = document.querySelector('[src="/modelos/SoloPortal.glb"]');
-    const cartel = document.querySelector('[src="/modelos/SoloCartel.glb"]');
+    const sceneEl = sceneRef.current;
+    const targetEntities = document.querySelectorAll(".dino-target");
 
-    if (portal) {
-      portal.addEventListener("model-loaded", () => {
-        portal.object3D.renderOrder = 1;
+    // FUNCTION TO HANDLE FOUND
+    const onTargetFound = (event) => {
+      // MindAR event target is the element itself
+      const index = event.target.getAttribute("data-index");
+      console.log("🔥 TARGET FOUND DIRECTLY:", index); 
+      handleDinoFound(parseInt(index));
+    };
+
+    // FUNCTION TO HANDLE LOST (Optional)
+    const onTargetLost = (event) => {
+      const index = event.target.getAttribute("data-index");
+      console.log("💨 Target Lost:", index);
+    };
+
+    // ATTACH LISTENERS
+    // We wait a tiny bit to ensure A-Frame has initialized the DOM nodes
+    const timer = setTimeout(() => {
+        targetEntities.forEach((el) => {
+            el.addEventListener("targetFound", onTargetFound);
+            el.addEventListener("targetLost", onTargetLost);
+        });
+    }, 1000); // 1 second delay to be safe
+
+    // CLEANUP
+    return () => {
+      clearTimeout(timer);
+      targetEntities.forEach((el) => {
+        el.removeEventListener("targetFound", onTargetFound);
+        el.removeEventListener("targetLost", onTargetLost);
       });
-    }
-    if (cartel) {
-      cartel.addEventListener("model-loaded", () => {
-        cartel.object3D.renderOrder = 2;
-      });
-    }
-  }, []);
-
+    };
+  }, [handleDinoFound, animalPaths]);
   return (
-    <a-scene 
-    embedded 
-    arjs='sourceType: webcam; sourceWidth:1280; sourceHeight:960; displayWidth: 1280; displayHeight: 960; debugUIEnabled: false;'
-    vr-mode-ui="enabled: false"
-    renderer="logarithmicDepthBuffer: true;">
-
-
-      <a-marker 
-        type="pattern" url="https://192.168.134.89:5173/capibara.patt"
-        smooth="true"
-        smoothCount="10"
-        smoothTolerance="0.01"
-        smoothThreshold="5"
+    <div style={{ position: "absolute", inset: 0, zIndex: 1 }}>
+      <a-scene
+        ref={sceneRef}
+        mindar-image={`imageTargetSrc: ${path}; filterMinCF:0.0001; filterBeta: 0.01`}
+        color-space="sRGB"
+        renderer="colorManagement: true; precision: mediump;"
+        vr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
+        embedded
       >
-        
-        {/* LEON */}
-        <a-gltf-model
-          src="/modelos/Leon.glb"
-          scale="1 1 1"
-          rotation="-60 -90 90"
-          position="0 0 0.8"
-          fix-visibility=""
-        />
+        <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
 
-        {/* PORTAL */}
-        <a-gltf-model
-          src="/modelos/SoloPortal.glb"
-          scale="1 1 1"
-          rotation="-90 -90 90"
-          position="0 0 1"
-          fix-visibility=""
-        />
+        {animalPaths.map((modelUrl, index) => (
+          <a-entity
+            key={index}
+            // IMPORTANT: We add a class to select them easily in JS
+            class="dino-target"
+            // IMPORTANT: We store the index in a data attribute to read it in the event
+            data-index={index} 
+            mindar-image-target={`targetIndex: ${index}`}
+          >
+            <a-gltf-model
+              src={modelUrl}
+              scale="0.5 0.5 0.5"
+              position="0 0.1 0.2"
+              animation-mixer
+              fix-visibility=""
+            ></a-gltf-model>
 
-        {/* CARTEL */}
-        <a-gltf-model
-          src="/modelos/SoloCartel.glb"
-          scale="1 1 1"
-          rotation="-90 -90 90"
-          position="0 0.001 1.001"
-          fix-visibility=""
-        />
 
-      </a-marker>
 
-      <a-entity camera fov="80"></a-entity>
-    </a-scene>
+            {/* SHARED PORTAL (Same for everyone) */}
+            <a-gltf-model
+              class="portal-model"
+              src="/modelos/portal.glb"
+              scale="0.5 0.5 0.5"
+              rotation="0 0 0"
+              position="0 0 0"
+              fix-visibility=""
+            ></a-gltf-model>
+
+            {/* SHARED CARTEL (Same for everyone) */}
+            <a-gltf-model
+              class="cartel-model"
+              src="/modelos/SoloCartel.glb"
+              scale="0.5 0.5 0.5"
+              rotation="0 0 0"
+              position="0 0 0.15"
+              fix-visibility=""
+            ></a-gltf-model>
+
+
+
+          </a-entity>
+        ))}
+      </a-scene>
+    </div>
   );
 }
