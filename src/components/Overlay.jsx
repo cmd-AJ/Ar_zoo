@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGame } from './Gamecontext';
 import "./css/overlay.css"
+import { DINO_ASSETS } from '../config';
 
 export default function UIOverlay() {
   const { user, handleRegister, foundDinos } = useGame();
@@ -87,21 +88,41 @@ export default function UIOverlay() {
             <div style={{backgroundColor:"#744a25", padding:20, borderRadius:"10px", paddingBottom:"15%"}}>
             <h2 className='titlecoleccion'>TU COLECCIÓN</h2>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 10 }}>
-                {[...Array(10)].map((_, i) => {
-                    const dinoId = `animal_${i+1}`;
-                    const isFound = foundDinos.includes(dinoId);
-                    return (
-                        <div key={i} style={{ 
-                            width: 50, height: 50, 
-                            background: isFound ? '#4CAF50' : '#ddd',
-                            border: '2px solid white',
-                            display: 'flex', alignItems: 'center', justifyContent: 'center'
-                        }}>
-                            {isFound ? '✓' : '?'}
-                        </div>
-                    )
-                })}
-            </div>
+    {[...Array(10)].map((_, i) => {
+        // UPDATE 1: Match the ID to your config (animal_0, animal_1...)
+        // We use 'i' instead of 'i+1' because your config starts at 0
+        const dinoId = `animal_${i}`; 
+        
+        const isFound = foundDinos.includes(dinoId);
+        
+        // UPDATE 2: Get the specific image for this animal
+        const imageSrc = DINO_ASSETS[dinoId];
+
+        return (
+            <div key={i} style={{ 
+                width: 50, height: 50, 
+                // Change background: White if found (to show image clearly), Grey if not
+                background: isFound ? 'white' : '#ddd',
+                border: isFound ? '2px solid #4CAF50' : '2px solid white', // Green border if found
+                borderRadius: '8px',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                overflow: 'hidden' // Keeps the image inside the rounded corners
+            }}>
+                    {isFound ? (
+                        // SHOW IMAGE IF FOUND
+                        <img 
+                            src={imageSrc} 
+                            alt="Found" 
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                        />
+                    ) : (
+                        // SHOW '?' IF NOT FOUND
+                        <span style={{ fontSize: '20px', color: '#666' }}>?</span>
+                    )}
+                </div>
+            )
+        })}
+    </div>
 
             </div>
             <button className='closer' style={{marginTop: 20}} onClick={() => setShowProgress(false)}>Cerrar</button>
