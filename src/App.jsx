@@ -5,6 +5,7 @@ import './App.css'
 import ARScene from './components/ARScene'
 import { GameProvider } from './components/Gamecontext'
 import UIOverlay from './components/Overlay'
+import InfoButton from './components/Infobutton'
 
 function App() {
 
@@ -31,8 +32,9 @@ function App() {
 
     
 
-
+    
     <div className="App">
+      <InfoButton></InfoButton>
           <GameProvider>
       <div className="App" style={{position: 'relative', width: '100vw', height: '100vh'}}>
         <ARScene path={mindFilePath} animalPaths={animalModels} />

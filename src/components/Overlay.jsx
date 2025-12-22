@@ -4,7 +4,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useGame } from './Gamecontext';
 import "./css/overlay.css"
 import { DINO_ASSETS } from '../config';
-import InfoButton from './Infobutton';
 
 export default function UIOverlay() {
   const { user, handleRegister, foundDinos } = useGame();
@@ -34,10 +33,9 @@ export default function UIOverlay() {
   if (!user) {
     return (
       <div style={{ position: 'absolute', zIndex: 10, background: 'white', padding: 20, top: '20%', left: '10%', right: '10%' }}>
-        <InfoButton></InfoButton>
         <img className='mainpage' src='/overlay/backgroundZoo.png'></img>
         
-        <h2 className='titlehung'>REGISTRO ANIMAL HUNT</h2>
+        <h2 className='titlehung'>REGISTRO AL SAFARI DE ANIMALES</h2>
         <form onSubmit={onSubmit} className='formulario'>
           <input 
             placeholder="Nombre" 
@@ -75,11 +73,39 @@ export default function UIOverlay() {
       {/* HUD Header */}
       <div  style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
         <button className='HUDheader' onClick={() => setShowProgress(true)}>
-           Ver Progreso ({foundDinos.length}/10)
+           <img width={40} height={40} src='/overlay/logo.png'></img>
         </button>
       </div>
 
-      <InfoButton></InfoButton>
+      <div  style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
+
+        {[...Array(10)].map((_, i) => {
+        // UPDATE 1: Match the ID to your config (animal_0, animal_1...)
+        // We use 'i' instead of 'i+1' because your config starts at 0
+        const dinoId = `animal_${i}`; 
+        
+        const isFound = foundDinos.includes(dinoId);
+        
+        // UPDATE 2: Get the specific image for this animal
+        const imageSrc = DINO_ASSETS[dinoId];
+
+        return (
+          <div id={dinoId} key={dinoId}>
+
+            <img width={30} src={imageSrc}></img>
+
+            
+
+        </div>
+      
+      )
+
+       
+        })}
+        
+           
+      </div>
+
 
       {/* Progress Modal */}
       {showProgress && (

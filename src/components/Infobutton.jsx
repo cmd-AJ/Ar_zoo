@@ -2,10 +2,12 @@ import React, { useEffect } from 'react';
 import Swal from 'sweetalert2';
 
 export default function InfoButton() {
+
+  
   const showInstructions = () => {
     Swal.fire({
       imageUrl:  '/overlay/Instrucciones.png',
-        imageWidth: 250,
+        imageWidth: 280,
       confirmButtonText: '¡Entendido!',
       confirmButtonColor: '#744a25',
       customClass: {

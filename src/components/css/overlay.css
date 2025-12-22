@@ -139,10 +139,10 @@
 .HUDheader{
 
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: #744a25;
-    color: white;
+    background-color: #fff;
     font-size: 0.9rem;
-    border-radius: 10px;
+    border-radius: 50%;
+    padding-top: 2%;
     
 
 }

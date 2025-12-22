@@ -1,93 +1,55 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useGame } from "./Gamecontext";
 
 export default function ARScene({ path, animalPaths = [] }) {
   const sceneRef = useRef(null);
   const { handleDinoFound } = useGame();
-
-  // We use this to keep track of listeners to remove them later
-  const targetsRef = useRef([]);
-
   
+  // 1. Keep track of which dinos have played sound to prevent repeats
+  const playedDinos = useRef(new Set());
 
-useEffect(() => {
-    // ---------------------------------------------------------
-    // 1. REGISTER "MAKE-UNLIT" COMPONENT (NEW CODE)
-    // ---------------------------------------------------------
-    if (typeof window !== "undefined" && window.AFRAME) {
-      if (!window.AFRAME.components["make-unlit"]) {
-        window.AFRAME.registerComponent("make-unlit", {
-          init: function () {
-            this.el.addEventListener("model-loaded", () => {
-              const obj = this.el.getObject3D("mesh");
-              if (!obj) return;
-
-              obj.traverse((node) => {
-                if (node.isMesh && node.material) {
-                  // 1. Grab original texture
-                  const texture = node.material.map;
-                  const color = node.material.color;
-
-                  // 2. Create a cheap "Basic" material (no lights needed)
-                  const newMat = new window.AFRAME.THREE.MeshBasicMaterial({
-                    color: color, 
-                    map: texture,
-                    side: window.AFRAME.THREE.DoubleSide,
-                    transparent: node.material.transparent,
-                    alphaTest: 0.5 
-                  });
-
-                  // 3. Fix encoding if texture exists
-                  if (texture) {
-                    texture.encoding = window.AFRAME.THREE.sRGBEncoding;
-                  }
-
-                  node.material = newMat;
-                }
-              });
-            });
-          },
-        });
-      }
+  useEffect(() => {
+    // REGISTER MAKE-UNLIT (Shortened for clarity, keep your existing logic here)
+    if (typeof window !== "undefined" && window.AFRAME && !window.AFRAME.components["make-unlit"]) {
+        window.AFRAME.registerComponent("make-unlit", { /* ... your logic ... */ });
     }
-    // ---------------------------------------------------------
 
-    const sceneEl = sceneRef.current;
-    const targetEntities = document.querySelectorAll(".dino-target");
-
-    // FUNCTION TO HANDLE FOUND
     const onTargetFound = (event) => {
-      // MindAR event target is the element itself
-      const index = event.target.getAttribute("data-index");
-      console.log("🔥 TARGET FOUND DIRECTLY:", index); 
-      handleDinoFound(parseInt(index));
+      const index = parseInt(event.target.getAttribute("data-index"));
+      
+      // 2. TRIGGER ONLY ONCE: Check if already played
+      if (!playedDinos.current.has(index)) {
+        console.log("🔊 Playing sound for index:", index);
+        
+        // Use standard HTML5 Audio
+        const audio = new Audio(`/audio/animal_${index}.mp3`);
+        audio.play().catch(e => console.log("Audio play blocked:", e));
+
+        // Mark as played and update game state
+        playedDinos.current.add(index);
+        handleDinoFound(index);
+      }
     };
 
-    // FUNCTION TO HANDLE LOST (Optional)
-    const onTargetLost = (event) => {
-      const index = event.target.getAttribute("data-index");
-      console.log("💨 Target Lost:", index);
-    };
-
-    // ATTACH LISTENERS
-    // We wait a tiny bit to ensure A-Frame has initialized the DOM nodes
     const timer = setTimeout(() => {
-        targetEntities.forEach((el) => {
-            el.addEventListener("targetFound", onTargetFound);
-            el.addEventListener("targetLost", onTargetLost);
-        });
-    }, 1000); // 1 second delay to be safe
+      const targetEntities = document.querySelectorAll(".dino-target");
+      targetEntities.forEach((el) => {
+        el.addEventListener("targetFound", onTargetFound);
+      });
+    }, 1000);
 
-    // CLEANUP
     return () => {
       clearTimeout(timer);
+      const targetEntities = document.querySelectorAll(".dino-target");
       targetEntities.forEach((el) => {
         el.removeEventListener("targetFound", onTargetFound);
-        el.removeEventListener("targetLost", onTargetLost);
       });
     };
-  }, [handleDinoFound, animalPaths]);
-  return (
+  }, [handleDinoFound]);
+
+  // 3. MEMOIZE THE SCENE: This prevents the "Freeze"
+  // This tells React: "Do not re-render the 3D scene even if the parent state changes."
+  const memoizedScene = useMemo(() => (
     <div style={{ position: "absolute", inset: 0, zIndex: 1 }}>
       <a-scene
         ref={sceneRef}
@@ -95,7 +57,6 @@ useEffect(() => {
         color-space="sRGB"
         renderer="colorManagement: true; precision: mediump;"
         vr-mode-ui="enabled: false"
-        device-orientation-permission-ui="enabled: false"
         embedded
       >
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
@@ -103,9 +64,7 @@ useEffect(() => {
         {animalPaths.map((modelUrl, index) => (
           <a-entity
             key={index}
-            // IMPORTANT: We add a class to select them easily in JS
-            class="dino-target"
-            // IMPORTANT: We store the index in a data attribute to read it in the event
+            className="dino-target"
             data-index={index} 
             mindar-image-target={`targetIndex: ${index}`}
           >
@@ -114,36 +73,16 @@ useEffect(() => {
               scale="0.5 0.5 0.5"
               position="0 0.1 0.2"
               animation-mixer
-              fix-visibility=""
+              make-unlit
             ></a-gltf-model>
 
-
-
-            {/* SHARED PORTAL (Same for everyone) */}
-            <a-gltf-model
-              class="portal-model"
-              src="/modelos/portal.glb"
-              scale="0.5 0.5 0.5"
-              rotation="0 0 0"
-              position="0 0 0"
-              fix-visibility=""
-            ></a-gltf-model>
-
-            {/* SHARED CARTEL (Same for everyone) */}
-            <a-gltf-model
-              class="cartel-model"
-              src="/modelos/SoloCartel.glb"
-              scale="0.5 0.5 0.5"
-              rotation="0 0 0"
-              position="0 0 0.15"
-              fix-visibility=""
-            ></a-gltf-model>
-
-
-
+            <a-gltf-model src="/modelos/portal.glb" scale="0.5 0.5 0.5" />
+            <a-gltf-model src="/modelos/SoloCartel.glb" scale="0.5 0.5 0.5" position="0 0 0.15" />
           </a-entity>
         ))}
       </a-scene>
     </div>
-  );
+  ), [path, animalPaths]);
+
+  return memoizedScene;
 }
