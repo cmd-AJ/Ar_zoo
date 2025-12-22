@@ -1,26 +1,65 @@
+/* --- BASE STYLES (Common for all) --- */
 .mainpage {
-    /* 1. Define the image source */
-
     position: absolute;
 
-    right: -18%;
-    top: -40%;
-
+    transform: translate(-50%, -50%);
+    
     z-index: -900;
+    object-fit: cover;
+    background-color: rgb(16, 106, 0);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 
-    width: 110dvw;
-    height: 110dvh;
-
-
-    background-color: aqua;
+/* --- 1. PHONE (Small screens) --- */
+@media (max-width: 480px) {
+    .mainpage {
+        /* On phone, we use 110% to ensure no white edges if the phone rotates */
+        width: 100dvw;
+        height: 110dvh;
+        top: 40%; /* Adjusted to 50% for perfect centering */
+        left: 50%;
+    }
     
 
-    background-size: cover;
+}
 
-    background-position: center;
+/* --- 2. TABLET (Medium screens) --- */
+@media (min-width: 481px) and (max-width: 1024px) {
+    .mainpage {
+        width: 100dvw;
+        height: 140dvh;
+        top: 60%; /* Adjusted to 50% for perfect centering */
+        left: 50%;
+    }
+        .titlehung{
 
-    background-repeat: no-repeat;
+        color: white;
+        
+        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        position: relative;
+        width: 80vw;
+        right: 8%;
+        font-weight: 800;
+        text-align: center;
+        font-size: 1rem;
+        margin-top: 2%;
 
+
+    }
+
+}
+
+/* --- 3. PC / DESKTOP (Large screens) --- */
+@media (min-width: 1025px) {
+    .mainpage {
+        /* On PC, we can stick to exact viewport or slightly more */
+        width: 100dvw;
+        height: 110dvh;
+        top: 30%; /* Adjusted to 50% for perfect centering */
+        left: 50%;
+    }
 
 
 }
@@ -32,10 +71,12 @@
     
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     position: relative;
-    width: 80vw;
-    right: 8%;
+    width: 100%;
     font-weight: 800;
     text-align: center;
+    font-size: 1rem;
+    margin-top: 20%;
+
 
 
 }
@@ -51,6 +92,8 @@
 }
 
 
+@media (max-width: 1024px) {
+
 .input-field{
     height: 6dvh;
 
@@ -61,6 +104,23 @@
     border-radius: 10px;
 
 }
+}
+
+@media (min-width: 1025px) {
+
+.input-field{
+    height: 4.4dvh;
+
+    background-color: #ffbe00 ;
+    text-align: center;
+    font-size: 1rem;
+
+    border-radius: 10px;
+
+}
+}
+
+
 
 
 .jugar{

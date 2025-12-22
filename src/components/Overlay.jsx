@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useGame } from './Gamecontext';
 import "./css/overlay.css"
 import { DINO_ASSETS } from '../config';
+import InfoButton from './Infobutton';
 
 export default function UIOverlay() {
   const { user, handleRegister, foundDinos } = useGame();
@@ -11,6 +12,8 @@ export default function UIOverlay() {
   // Local form state
   const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
   const [showProgress, setShowProgress] = useState(false);
+
+  const [showInstrucciones, setshowInstrucciones] = useState(false);
 
   const prevCountRef = useRef(0);
 
@@ -31,7 +34,7 @@ export default function UIOverlay() {
   if (!user) {
     return (
       <div style={{ position: 'absolute', zIndex: 10, background: 'white', padding: 20, top: '20%', left: '10%', right: '10%' }}>
-        
+        <InfoButton></InfoButton>
         <img className='mainpage' src='/overlay/backgroundZoo.png'></img>
         
         <h2 className='titlehung'>REGISTRO ANIMAL HUNT</h2>
@@ -75,6 +78,8 @@ export default function UIOverlay() {
            Ver Progreso ({foundDinos.length}/10)
         </button>
       </div>
+
+      <InfoButton></InfoButton>
 
       {/* Progress Modal */}
       {showProgress && (
