@@ -80,7 +80,7 @@ export const GameProvider = ({ children }) => {
         setTimeout(() => {
         Swal.fire({
             title: '¡FELICIDADES!',
-            text: 'Has completado Animal Hunt.',
+            text: 'Has completado la Expedición Silvestre.',
             icon: 'success'
         });
     }, 4000);
