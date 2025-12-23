@@ -35,7 +35,7 @@ export default function UIOverlay() {
       <div style={{ position: 'absolute', zIndex: 10, background: 'white', padding: 20, top: '20%', left: '10%', right: '10%' }}>
         <img className='mainpage' src='/overlay/backgroundZoo.png'></img>
         
-        <h2 className='titlehung'>REGISTRO A LA EXPEDICIÓN SILVESTRE DE ANIMALES</h2>
+        <h2 className='titlehung'>REGISTRATE</h2>
         <form onSubmit={onSubmit} className='formulario'>
           <input 
             placeholder="Nombre" 

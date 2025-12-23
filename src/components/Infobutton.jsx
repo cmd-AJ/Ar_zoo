@@ -9,7 +9,7 @@ export default function InfoButton() {
       imageUrl:  '/overlay/Instrucciones.png',
         imageWidth: 280,
       confirmButtonText: '¡Entendido!',
-      confirmButtonColor: '#744a25',
+      confirmButtonColor: '#E68C00',
       customClass: {
         container: 'my-swal-override'
         

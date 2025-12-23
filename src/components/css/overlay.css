@@ -35,7 +35,7 @@
     }
         .titlehung{
 
-        color: white;
+        color: #000;
         
         font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
         position: relative;
@@ -67,7 +67,7 @@
 
 .titlehung{
 
-    color: white;
+    color: black;
     
     font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     position: relative;
@@ -97,11 +97,15 @@
 .input-field{
     height: 6dvh;
 
-    background-color: #ffbe00 ;
+    color: white;
+
+    background-color: #0C8323 ;
     text-align: center;
     font-size: 1rem;
 
     border-radius: 10px;
+    border: 2px solid white;
+
 
 }
 }
@@ -111,11 +115,15 @@
 .input-field{
     height: 4.4dvh;
 
-    background-color: #ffbe00 ;
+    color: white;
+
+    background-color: #0C8323 ;
     text-align: center;
     font-size: 1rem;
 
     border-radius: 10px;
+    border: 2px solid white;
+
 
 }
 }
@@ -125,8 +133,10 @@
 
 .jugar{
 
-    background-color: #744a25;
+    background-color: #E68C00;
     color: white;
+    border: 2px solid white;
+    
     margin-top: 20%;
     height: 8vh;
     font-size: 2rem;
@@ -163,7 +173,7 @@
 .closer{
 
     
-    background-color: #744a25;
+    background-color: #E68C00;
     color: white;
     margin-top: 20%;
     height: 6vh;
