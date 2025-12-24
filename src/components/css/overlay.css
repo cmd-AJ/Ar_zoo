@@ -1,185 +1,160 @@
 /* --- BASE STYLES (Common for all) --- */
 .mainpage {
-    position: absolute;
+  position: absolute;
 
-    transform: translate(-50%, -50%);
-    
-    z-index: -900;
-    object-fit: cover;
-    background-color: rgb(16, 106, 0);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+  transform: translate(-50%, -50%);
+
+  z-index: -900;
+  object-fit: cover;
+  background-color: rgb(16, 106, 0);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 /* --- 1. PHONE (Small screens) --- */
 @media (max-width: 480px) {
-    .mainpage {
-        /* On phone, we use 110% to ensure no white edges if the phone rotates */
-        width: 100dvw;
-        height: 110dvh;
-        top: 40%; /* Adjusted to 50% for perfect centering */
-        left: 50%;
-    }
-    
-
+  .mainpage {
+    /* On phone, we use 110% to ensure no white edges if the phone rotates */
+    width: 100dvw;
+    height: 110dvh;
+    top: 40%; /* Adjusted to 50% for perfect centering */
+    left: 50%;
+  }
 }
 
 /* --- 2. TABLET (Medium screens) --- */
 @media (min-width: 481px) and (max-width: 1024px) {
-    .mainpage {
-        width: 100dvw;
-        height: 140dvh;
-        top: 60%; /* Adjusted to 50% for perfect centering */
-        left: 50%;
-    }
-        .titlehung{
-
-        color: #000;
-        
-        font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        position: relative;
-        width: 80vw;
-        right: 8%;
-        font-weight: 800;
-        text-align: center;
-        font-size: 1rem;
-        margin-top: 2%;
-
-
-    }
-
+  .mainpage {
+    width: 100dvw;
+    height: 140dvh;
+    top: 60%; /* Adjusted to 50% for perfect centering */
+    left: 50%;
+  }
+  .titlehung {
+    color: #000;
+    font-family: "Roboto", "Franklin Gothic Medium", "Arial Narrow", Arial,
+      sans-serif;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+    font-size: 1rem;
+  }
 }
 
 /* --- 3. PC / DESKTOP (Large screens) --- */
 @media (min-width: 1025px) {
-    .mainpage {
-        /* On PC, we can stick to exact viewport or slightly more */
-        width: 100dvw;
-        height: 110dvh;
-        top: 30%; /* Adjusted to 50% for perfect centering */
-        left: 50%;
-    }
-
-
+  .mainpage {
+    /* On PC, we can stick to exact viewport or slightly more */
+    width: 100dvw;
+    height: 110dvh;
+    top: 30%; /* Adjusted to 50% for perfect centering */
+    left: 50%;
+  }
 }
 
-
-.titlehung{
-
-    color: black;
-    
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    position: relative;
-    width: 100%;
-    font-weight: 800;
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 20%;
-
-
-
+.titlehung {
+  color: black;
+  font-family: "Roboto", "Franklin Gothic Medium", "Arial Narrow", Arial,
+    sans-serif;
+  font-weight: bold;
+  text-align: center;
+  font-size: 1.875rem;
+  margin-top: 0px;
+  margin-bottom: 30px;
 }
 
-
-.formulario{
-
-    display: flex;
-
-    gap: 2rem 0px;
-    flex-direction: column;
-
+.formulario {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px 0px;
+  flex-direction: column;
+  width: 100%;
 }
-
 
 @media (max-width: 1024px) {
-
-.input-field{
+  .input-field {
+    font-family: "Rowdies", "Franklin Gothic Medium", "Arial Narrow", Arial,
+      sans-serif;
     height: 6dvh;
+    width: 70%;
 
     color: white;
-
-    background-color: #0C8323 ;
+    background-color: #0c8323;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.5rem;
 
-    border-radius: 10px;
-    border: 2px solid white;
+    border-radius: 20px;
+    border: 6px solid white;
+  }
 
-
-}
+  .input-field::placeholder {
+    font-family: "Rowdies", "Franklin Gothic Medium", "Arial Narrow", Arial,
+      sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: rgb(255, 255, 255);
+  }
 }
 
 @media (min-width: 1025px) {
-
-.input-field{
+  .input-field {
     height: 4.4dvh;
 
     color: white;
 
-    background-color: #0C8323 ;
+    background-color: #0c8323;
     text-align: center;
     font-size: 1rem;
 
     border-radius: 10px;
-    border: 2px solid white;
-
-
-}
-}
-
-
-
-
-.jugar{
-
-    background-color: #E68C00;
-    color: white;
-    border: 2px solid white;
-    
-    margin-top: 20%;
-    height: 8vh;
-    font-size: 2rem;
-    font-weight: 600;
-    border-radius: 50px;
+    border: 6px solid white;
+  }
+  .input-field::placeholder {
+    font-family: "Rowdies", "Franklin Gothic Medium", "Arial Narrow", Arial,
+      sans-serif;
+    font-weight: bold;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+  }
 }
 
-
-
-.HUDheader{
-
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    background-color: #fff;
-    font-size: 0.9rem;
-    border-radius: 50%;
-    padding-top: 2%;
-    
-
+.jugar {
+  background-color: #e68c00;
+  color: white;
+  border: 6px solid white;
+  width: 70%;
+  height: 8vh;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 50px;
 }
 
+.HUDheader {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  background-color: #fff;
+  font-size: 0.9rem;
+  border-radius: 50%;
+  padding-top: 2%;
+}
 
 .swal2-popup {
-    font-size: 14px !important;
+  font-size: 14px !important;
 }
 
-
-.titlecoleccion{
-
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-align: center;
+.titlecoleccion {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-align: center;
 }
 
-
-.closer{
-
-    
-    background-color: #E68C00;
-    color: white;
-    margin-top: 20%;
-    height: 6vh;
-    width: 60%;
-    font-size: 1.8rem;
-    font-weight: 600;
-    border-radius: 50px;
-
+.closer {
+  background-color: #e68c00;
+  color: white;
+  margin-top: 20%;
+  height: 6vh;
+  width: 60%;
+  font-size: 1.8rem;
+  font-weight: 600;
+  border-radius: 50px;
 }

@@ -10,7 +10,7 @@ import InfoButton from './components/Infobutton'
 function App() {
 
 
-  const mindFilePath = "/Animals.mind"; 
+  const mindFilePath = "/Animals.mind";
 
   // 2. THE ARRAY OF MODELS
   // The order here MUST match the order inside the .mind file
@@ -30,18 +30,18 @@ function App() {
   return (
 
 
-    
 
-    
+
+
     <div className="App">
       <InfoButton></InfoButton>
-          <GameProvider>
-      <div className="App" style={{position: 'relative', width: '100vw', height: '100vh'}}>
-        <ARScene path={mindFilePath} animalPaths={animalModels} />
-        <UIOverlay />
-      </div>
-    </GameProvider>
+      <GameProvider>
+        <div className="App" style={{ position: 'relative', width: '100vw', height: '100vh' }}>
+          <ARScene path={mindFilePath} animalPaths={animalModels} />
+          <UIOverlay />
         </div>
+      </GameProvider>
+    </div>
   )
 }
 
