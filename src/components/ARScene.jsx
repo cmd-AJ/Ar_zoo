@@ -58,6 +58,7 @@ export default function ARScene({ path, animalPaths = [] }) {
         renderer="colorManagement: true; precision: mediump; sortTransparentObjects: true;physicallyCorrectLights: false; logarithmicDepthBuffer: true"
         shadow="type: pcfsoft"
         xr-mode-ui="enabled: false"
+        device-orientation-permission-ui="enabled: false"
         embedded
       >
         <a-camera position="0 0 0" look-controls="enabled: false"></a-camera>
