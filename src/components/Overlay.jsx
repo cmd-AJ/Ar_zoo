@@ -1,18 +1,17 @@
 // This is only the register form. THis register form doesnt affect anything of the AR just the UIs
 
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGame } from './Gamecontext';
 import "./css/overlay.css"
+import { FiLogOut } from 'react-icons/fi';
 import { DINO_ASSETS } from '../config';
 
 export default function UIOverlay() {
-  const { user, handleRegister, foundDinos } = useGame();
+  const { user, handleRegister, foundDinos, handleLogout } = useGame();
 
   // Local form state
   const [formData, setFormData] = useState({ nombre: '', correo: '', telefono: '' });
   const [showProgress, setShowProgress] = useState(false);
-
-  const [showInstrucciones, setshowInstrucciones] = useState(false);
 
   const prevCountRef = useRef(0);
 
@@ -32,37 +31,7 @@ export default function UIOverlay() {
   // If user is NOT registered, show Register Form
   if (!user) {
     return (
-      // <div style={{ position: 'absolute', zIndex: 10, background: 'white', padding: 20, top: '20%', left: '10%', right: '10%' }}>
-      //   <img className='mainpage' src='/overlay/backgroundZoo.png'></img>
 
-      //   <h2 className='titlehung'>REGISTRATE</h2>
-      //   <form onSubmit={onSubmit} className='formulario'>
-      //     <input
-      //       placeholder="Nombre"
-      //       className="input-field"
-      //       value={formData.nombre}
-      //       onChange={e => setFormData({ ...formData, nombre: e.target.value })}
-      //       required
-      //     />
-      //     <input
-      //       placeholder="Correo"
-      //       type="email"
-      //       className="input-field"
-      //       value={formData.correo}
-      //       onChange={e => setFormData({ ...formData, correo: e.target.value })}
-      //       required
-      //     />
-      //     <input
-      //       placeholder="Teléfono"
-      //       type="tel"
-      //       className="input-field"
-      //       value={formData.telefono}
-      //       onChange={e => setFormData({ ...formData, telefono: e.target.value })}
-      //       required
-      //     />
-      //     <button className='jugar' type="submit">JUGAR</button>
-      //   </form>
-      // </div>
       <div style={{
         position: 'absolute', top: 0, bottom: 0, left: 0,
         right: 0, backgroundColor: "#000", zIndex: 3, backgroundImage: `url('/overlay/overlay.png')`,
@@ -101,7 +70,7 @@ export default function UIOverlay() {
               onChange={e => setFormData({ ...formData, telefono: e.target.value })}
               required
             />
-            <button className='jugar' type="submit">JUGAR</button>
+            <button className='jugar' type="submit">¡JUGAR!</button>
           </form>
 
         </div>
@@ -121,6 +90,16 @@ export default function UIOverlay() {
           <img width={40} height={40} src='/overlay/logo.png'></img>
         </button>
       </div>
+
+      {/* Boton de salida */}
+      <button
+        className="exit-button"
+        onClick={() => handleLogout()}
+        aria-label="Salir"
+        style={{ pointerEvents: 'auto' }}
+      >
+        <FiLogOut size={20} color="#fff" />
+      </button>
 
       <div style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
         {[...Array(10)].map((_, i) => {

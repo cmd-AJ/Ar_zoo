@@ -39,7 +39,7 @@ export const GameProvider = ({ children }) => {
     try {
       Swal.fire({ title: 'Cargando...', didOpen: () => Swal.showLoading() });
       const data = await registerUser(formData);
-      
+
       if (data.success) {
         localStorage.setItem('dataId', data.usuario._id);
         setUser(data.usuario);
@@ -54,7 +54,7 @@ export const GameProvider = ({ children }) => {
 
   const handleDinoFound = async (index) => {
     const dinoId = DINO_IDS[index];
-    
+
     // 1. If already found, ignore
     if (foundDinos.includes(dinoId)) return;
 
@@ -72,28 +72,42 @@ export const GameProvider = ({ children }) => {
 
     // 4. Update Server
     if (user?._id) {
-        await updateDinoOnServer(user._id, dinoId);
+      await updateDinoOnServer(user._id, dinoId);
     }
 
     // 5. Check Win Condition
     if (newFoundList.length === 10) {
-        setTimeout(() => {
+      setTimeout(() => {
         Swal.fire({
-            title: '¡FELICIDADES!',
-            text: 'Has completado la Expedición Silvestre.',
-            icon: 'success'
+          title: '¡FELICIDADES!',
+          text: 'Has completado la Expedición Silvestre.',
+          icon: 'success'
         });
-    }, 4000);
+      }, 4000);
     }
   };
 
+  // Logout / clear local data — exposed to consumers
+  const handleLogout = () => {
+    try {
+      localStorage.removeItem('dataId');
+    } catch (e) {
+      console.warn('Could not remove dataId from localStorage', e);
+    }
+    setUser(null);
+    setFoundDinos([]);
+    // Reload or redirect to root to reset app state
+    window.location.href = '/';
+  };
+
   return (
-    <GameContext.Provider value={{ 
-      user, 
-      foundDinos, 
-      handleRegister, 
+    <GameContext.Provider value={{
+      user,
+      foundDinos,
+      handleRegister,
       handleDinoFound,
-      loading 
+      handleLogout,
+      loading
     }}>
       {children}
     </GameContext.Provider>
