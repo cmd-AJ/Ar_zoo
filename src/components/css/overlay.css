@@ -184,3 +184,32 @@
   background: rgba(0, 0, 0, 0.6);
   transform: translateY(-2px);
 }
+
+/* Interact button pulse animation */
+.interact-button {
+  animation: pulse 2s infinite;
+  /* fallback styles in case inline styles are removed later */
+  background: #ffe619;
+  color: #111827;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 0, 0.7);
+  }
+  70% {
+    transform: scale(1.1);
+    box-shadow: 0 0 15px 15px rgba(255, 255, 0, 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
+  }
+}

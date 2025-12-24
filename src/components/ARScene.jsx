@@ -8,6 +8,10 @@ export default function ARScene({ path, animalPaths = [] }) {
   // 1. Keep track of which dinos have played sound to prevent repeats
   const playedDinos = useRef(new Set());
 
+  const targetEntities = document.querySelectorAll(".dino-target");
+  const btn = document.getElementById('interact-btn');
+
+
   useEffect(() => {
     // REGISTER MAKE-UNLIT (Shortened for clarity, keep your existing logic here)
     if (typeof window !== "undefined" && window.AFRAME && !window.AFRAME.components["make-unlit"]) {
@@ -16,23 +20,48 @@ export default function ARScene({ path, animalPaths = [] }) {
 
     const onTargetFound = (event) => {
       const index = parseInt(event.target.getAttribute("data-index"));
+      const audio = new Audio(`/audio/animal_${index}.mp3`);
+
+      // const audio = new Audio(`/audio/animal_${index}.mp3`);
+
+      // Show the interact button (was hidden by default)
+      try {
+        if (btn) {
+          btn.style.display = 'block';
+          // ensure it's focusable / visible
+          btn.focus && btn.focus();
+          btn.onclick = () => {
+            audio.play().catch(e => console.log("Audio play blocked:", e));
+          }
+        }
+      } catch (e) {
+        console.warn('Could not show interact button', e);
+      }
+
+      targetEntities.forEach((el) => {
+        el.addEventListener("targetLost", () => {
+          btn.style.display = 'none';
+          audio.pause();
+        });
+      });
 
       // 2. TRIGGER ONLY ONCE: Check if already played
       if (!playedDinos.current.has(index)) {
         console.log("🔊 Playing sound for index:", index);
 
         // Use standard HTML5 Audio
-        const audio = new Audio(`/audio/animal_${index}.mp3`);
+        // const audio = new Audio(`/audio/animal_${index}.mp3`);
         audio.play().catch(e => console.log("Audio play blocked:", e));
 
         // Mark as played and update game state
         playedDinos.current.add(index);
         handleDinoFound(index);
+
+
       }
     };
 
     const timer = setTimeout(() => {
-      const targetEntities = document.querySelectorAll(".dino-target");
       targetEntities.forEach((el) => {
         el.addEventListener("targetFound", onTargetFound);
       });
@@ -40,12 +69,13 @@ export default function ARScene({ path, animalPaths = [] }) {
 
     return () => {
       clearTimeout(timer);
-      const targetEntities = document.querySelectorAll(".dino-target");
       targetEntities.forEach((el) => {
         el.removeEventListener("targetFound", onTargetFound);
       });
     };
-  }, [handleDinoFound]);
+  }, [handleDinoFound, btn, targetEntities]);
+
+
 
   // 3. MEMOIZE THE SCENE: This prevents the "Freeze"
   // This tells React: "Do not re-render the 3D scene even if the parent state changes."
@@ -98,6 +128,18 @@ export default function ARScene({ path, animalPaths = [] }) {
           </a-entity>
         ))}
       </a-scene>
+
+
+      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'auto' }}>
+        <button
+          id="interact-btn"
+          className="interact-button"
+          aria-label="Interactua"
+          style={{ display: 'none' }}
+        >
+          ¿Interactuar?
+        </button>
+      </div>
     </div>
   ), [path, animalPaths]);
 

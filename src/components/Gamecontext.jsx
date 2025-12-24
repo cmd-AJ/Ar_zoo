@@ -87,26 +87,12 @@ export const GameProvider = ({ children }) => {
     }
   };
 
-  // Logout / clear local data — exposed to consumers
-  const handleLogout = () => {
-    try {
-      localStorage.removeItem('dataId');
-    } catch (e) {
-      console.warn('Could not remove dataId from localStorage', e);
-    }
-    setUser(null);
-    setFoundDinos([]);
-    // Reload or redirect to root to reset app state
-    window.location.href = '/';
-  };
-
   return (
     <GameContext.Provider value={{
       user,
       foundDinos,
       handleRegister,
       handleDinoFound,
-      handleLogout,
       loading
     }}>
       {children}
