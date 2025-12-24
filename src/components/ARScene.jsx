@@ -55,7 +55,7 @@ export default function ARScene({ path, animalPaths = [] }) {
         ref={sceneRef}
         mindar-image={`imageTargetSrc: ${path}; filterMinCF:0.0001; filterBeta: 0.0001`}
         color-space="sRGB"
-        renderer="colorManagement: true; precision: mediump; sortTransparentObjects: true;physicallyCorrectLights: false;"
+        renderer="colorManagement: true; precision: mediump; sortTransparentObjects: true;physicallyCorrectLights: false; logarithmicDepthBuffer: true"
         shadow="type: pcfsoft"
         xr-mode-ui="enabled: false"
         embedded
@@ -81,14 +81,14 @@ export default function ARScene({ path, animalPaths = [] }) {
             mindar-image-target={`targetIndex: ${index}`}
           >
             {/* <a-box color="tomato" depth="0.5" height="0.5" width="0.5"></a-box> */}
-            <a-gltf-model position="0 -0.7 0" src="/modelos/portal.glb" scale="0.8 0.8 0.8" />
+            <a-gltf-model animation-mixer position="0 -0.7 0" src="/modelos/portal.glb" scale="0.8 0.8 0.8" />
             <a-gltf-model src="/modelos/SoloCartel.glb" scale="0.4 0.4 0.4" position="0 -0.43 0.13" />
 
 
             <a-gltf-model
               src={modelUrl}
               scale="0.8 0.8 0.8"
-              position="0 -0.7 0.2"
+              position="0 -0.7 0"
               animation-mixer
               make-unlit
             ></a-gltf-model>
