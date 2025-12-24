@@ -27,7 +27,7 @@ export default function ARScene({ path, animalPaths = [] }) {
       // Show the interact button (was hidden by default)
       try {
         if (btn) {
-          btn.style.display = 'block';
+          btn.classList.remove("hidden");
           // ensure it's focusable / visible
           btn.focus && btn.focus();
           btn.onclick = () => {
@@ -40,7 +40,7 @@ export default function ARScene({ path, animalPaths = [] }) {
 
       targetEntities.forEach((el) => {
         el.addEventListener("targetLost", () => {
-          btn.style.display = 'none';
+          btn.classList.add("hidden");
           audio.pause();
         });
       });
@@ -130,12 +130,11 @@ export default function ARScene({ path, animalPaths = [] }) {
       </a-scene>
 
 
-      <div style={{ position: 'absolute', bottom: 20, left: '50%', transform: 'translateX(-50%)', pointerEvents: 'auto' }}>
+      <div style={{ position: 'absolute', bottom: '10%', left: '50%', transform: 'translateX(-50%)', pointerEvents: 'auto' }}>
         <button
           id="interact-btn"
-          className="interact-button"
+          className="interact-button hidden"
           aria-label="Interactua"
-          style={{ display: 'none' }}
         >
           ¿Interactuar?
         </button>

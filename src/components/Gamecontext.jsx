@@ -35,6 +35,13 @@ export const GameProvider = ({ children }) => {
 
   // --- ACTIONS ---
 
+  const handleLogout = () => {
+    localStorage.removeItem('dataId');
+    setUser(null);
+    setFoundDinos([]);
+  }
+
+
   const handleRegister = async (formData) => {
     try {
       Swal.fire({ title: 'Cargando...', didOpen: () => Swal.showLoading() });
@@ -93,6 +100,7 @@ export const GameProvider = ({ children }) => {
       foundDinos,
       handleRegister,
       handleDinoFound,
+      handleLogout,
       loading
     }}>
       {children}

@@ -199,6 +199,10 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+.hidden {
+  display: none !important;
+}
+
 @keyframes pulse {
   0% {
     transform: scale(1);
