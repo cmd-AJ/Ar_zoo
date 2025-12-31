@@ -82,12 +82,7 @@ export default function UIOverlay() {
           </div>
         ) : 
         
-                  <div style={{
-            position: 'absolute', top: 0, bottom: 0, left: 0,
-            right: 0, backgroundColor: "#000", zIndex: 3, backgroundImage: `url('/overlay/introduccion.png')`,
-            backgroundSize: 'cover', backgroundPosition: 'center', display: 'flex',
-            flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start'
-          }}>
+                  <div className='introduccion'>
 
             <button style={{backgroundColor:"#E68C00", border:"2px solid white", width:"30%" ,padding:10 ,color:'white', borderRadius:"10px", position:'absolute', bottom:"15%", left:"35%"}} onClick={handleClick} ><b>¡Empezar!</b></button>
 
@@ -110,7 +105,9 @@ export default function UIOverlay() {
       <div style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
         <button className='HUDheader' onClick={() => setShowProgress(true)}>
           <img width={40} height={40} src='/overlay/logo.png'></img>
+          <div style={{marginLeft:"10%" }}>EXPLORA ZOO</div>
         </button>
+        
       </div>
 
         <div style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
@@ -138,16 +135,6 @@ export default function UIOverlay() {
 
       </div>
 
-
-      {/* Boton de salida */}
-      <button
-        className="exit-button"
-        onClick={() => handleLogout()}
-        aria-label="Salir"
-        style={{ pointerEvents: 'auto' }}
-      >
-        <FiLogOut size={20} color="#fff" />
-      </button>
 
 
 

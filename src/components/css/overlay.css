@@ -1,4 +1,6 @@
 /* --- BASE STYLES (Common for all) --- */
+
+
 .mainpage {
   position: absolute;
 
@@ -134,11 +136,18 @@
 }
 
 .HUDheader {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  background-color: #fff;
-  font-size: 0.9rem;
+  background-color: transparent;
+  font-size: 0.8rem;
+  white-space: nowrap;
   border-radius: 50%;
   padding-top: 2%;
+  border: 0px solid transparent;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  font-family:Roboto-regular;
+  color: #fff;
+  font-weight: bold;
 }
 
 .swal2-popup {
@@ -329,4 +338,17 @@
   font-family: "Rowdies";
   font-weight: bold;
   font-size: 0.8rem;
+}
+
+/* Estilo base (Móviles estándar) */
+.introduccion {
+  position: fixed;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none; /* important for camera gestures */
+    background: 
+    #000 
+    url('/overlay/intro-md.png') 
+    center / contain 
+    no-repeat;
 }

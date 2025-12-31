@@ -44,18 +44,52 @@ export const GameProvider = ({ children }) => {
 
   const handleRegister = async (formData) => {
     try {
-      Swal.fire({ title: 'Cargando...', didOpen: () => Swal.showLoading() });
+      Swal.fire({ title: 'Cargando...', didOpen: () => Swal.showLoading(),  customClass: {
+          container: 'my-swal-container',
+          popup: 'swal-custom-popup',
+          title: 'my-swal-title',
+          confirmButton: 'my-swal-button',
+      } });
       const data = await registerUser(formData);
 
       if (data.success) {
         localStorage.setItem('dataId', data.usuario._id);
         setUser(data.usuario);
-        Swal.fire('¡ÉXITO!', 'Usuario registrado', 'success');
+         Swal.fire({
+          title: '<span style="color: #FFCD00">¡</span>ÉXITO<span style="color: #FFCD00">!</span>',
+          icon:'success',
+          confirmButtonText: 'Usuario registrado',
+          customClass: {
+          container: 'my-swal-container',
+          title: 'my-swal-title',
+          confirmButton: 'my-swal-button',
+      }
+        });
       } else {
-        Swal.fire('Error', data.message, 'error');
+         Swal.fire({
+          title: '<span style="color: #FFCD00">¡</span>Ha occurrido un error<span style="color: #FFCD00">!</span>',
+          icon:'error',
+          confirmButtonText: error.message,
+          customClass: {
+          container: 'my-swal-container',
+          popup: 'swal-custom-popup',
+          title: 'my-swal-title',
+          confirmButton: 'my-swal-button',
+      }
+        });
       }
     } catch (error) {
-      Swal.fire('Error', error.message, 'error');
+       Swal.fire({
+          title: '<span style="color: #FFCD00">¡</span>Número de Teléfono No válido<span style="color: #FFCD00">!</span>',
+          icon:'error',
+          confirmButtonText: "Regresar",
+          customClass: {
+          container: 'my-swal-container',
+          popup: 'swal-custom-popup',
+          title: 'my-swal-title',
+          confirmButton: 'my-swal-button',
+      }
+        });
     }
   };
 

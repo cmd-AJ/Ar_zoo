@@ -11,7 +11,10 @@ export default function InfoButton() {
       confirmButtonText: '¡Entendido!',
       confirmButtonColor: '#E68C00',
       customClass: {
-        container: 'my-swal-override'
+        container: 'my-swal-override',
+          popup: 'swal-custom-popup',
+          title: 'my-swal-title',
+          confirmButton: 'my-swal-button',
         
       }
     });
