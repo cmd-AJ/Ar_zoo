@@ -16,10 +16,17 @@
 
 
 
+.swal-custom-popup .swal2-icon.swal2-success,
+.swal-custom-popupfinal .swal2-icon.swal2-success {
+  background: none !important;
+  border: none !important;
+}
 
-/* Optional: remove success animation lines */
-.swal2-success-circular-line-left,
-.swal2-success-circular-line-right,
-.swal2-success-fix {
-  background: transparent !important;
+.swal-custom-popup .swal2-success-circular-line-left,
+.swal-custom-popup .swal2-success-circular-line-right,
+.swal-custom-popup .swal2-success-fix,
+.swal-custom-popupfinal .swal2-success-circular-line-left,
+.swal-custom-popupfinal .swal2-success-circular-line-right,
+.swal-custom-popupfinal .swal2-success-fix {
+  display: none !important;
 }
