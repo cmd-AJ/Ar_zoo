@@ -71,10 +71,16 @@ export const GameProvider = ({ children }) => {
 
     // 3. Alert UI
     Swal.fire({
-      title: 'Animal Encontrado!',
+      title: '<span style="color: #FFCD00">¡</span>AGREGADO A TU COLECCIÓN<span style="color: #FFCD00">!</span>',
       imageUrl: DINO_ASSETS[dinoId] || 'https://via.placeholder.com/150',
       imageWidth: 200,
-      confirmButtonText: 'Recolectar'
+      confirmButtonText: 'Recolectar',
+      customClass: {
+      container: 'my-swal-container',
+      popup: 'swal-custom-popup',
+      title: 'my-swal-title',
+      confirmButton: 'my-swal-button',
+  }
     });
 
     // 4. Update Server
@@ -86,10 +92,19 @@ export const GameProvider = ({ children }) => {
     if (newFoundList.length === 10) {
       setTimeout(() => {
         Swal.fire({
-          title: '¡FELICIDADES!',
-          text: 'Has completado la Expedición Silvestre.',
-          icon: 'success'
-        });
+            title: '<span style="color: #FFCD00">¡</span>FELICIDADES<span style="color: #FFCD00">!</span>',
+            html:'<span style="color: #fff, fontFamily:"Rowdies" >HAZ COMPLETADO EL <br> EXPLORA ZOO.</span">', 
+            imageUrl: "/overlay/logo.png" || 'https://via.placeholder.com/150',
+            imageWidth: 200,
+            confirmButtonText: 'CONTINUAR',
+            customClass: {
+            container: 'my-swal-containerfinal',
+            htmlContainer: 'my-swal-textfinal',
+            popup: 'swal-custom-popupfinal',
+            title: 'my-swal-titlefinal',
+            confirmButton: 'my-swal-buttonfinal',
+        }
+          });
       }, 4000);
     }
   };

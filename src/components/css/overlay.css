@@ -155,9 +155,10 @@
   color: white;
   margin-top: 20%;
   height: 6vh;
-  width: 60%;
-  font-size: 1.8rem;
+  width: 50%;
+  font-size: 1.2rem;
   font-weight: 600;
+  border: 2px solid white;
   border-radius: 50px;
 }
 
@@ -216,4 +217,116 @@
     transform: scale(1);
     box-shadow: 0 0 0 0 rgba(255, 255, 0, 0);
   }
+}
+
+
+
+/* The base state */
+.overlay-container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #000;
+  z-index: 3;
+  background-image: url('/overlay/overlay.png');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  
+  /* Smooth transition settings */
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1), opacity 0.6s ease;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* The state when the form is dismissed */
+.overlay-container.hidden {
+  transform: translateY(-100%); /* Slides it up */
+  opacity: 0;
+  pointer-events: none; /* Prevents clicking invisible inputs */
+}
+
+
+
+/* The backdrop/overlay */
+.my-swal-container {
+  backdrop-filter: blur(5px);
+}
+
+/* The actual modal box */
+
+.swal-custom-popup {
+  background-image: url('/overlay/wood.png') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border-radius: 15px !important;
+}
+
+/* The Title */
+.my-swal-title {
+  color: #FFFFFF !important;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Rowdies";
+}
+
+/* The Button */
+.my-swal-button {
+  background-color: #E68C00 !important;
+  color: #fff !important;
+  border: 2px solid white;
+  border-radius: 16px !important;
+  padding: 8px 10px !important;
+  font-family: "Rowdies";
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+
+
+
+
+/* The backdrop/overlay */
+.my-swal-containerfinal {
+  backdrop-filter: blur(5px);
+}
+
+.my-swal-textfinal {
+  color: white;
+}
+
+/* The actual modal box */
+
+.swal-custom-popupfinal {
+  background-image: url('/overlay/woodanimals.png') !important;
+  background-size: 100% 100% !important;
+  background-repeat: no-repeat; 
+  border-radius: 15px !important;
+}
+
+/* The Title */
+.my-swal-titlefinal {
+  color: #FFFFFF !important;
+  text-transform: uppercase;
+  font-size: 1.8rem;
+  font-weight: bold;
+  font-family: "Rowdies";
+}
+
+/* The Button */
+.my-swal-buttonfinal {
+  background-color: #E68C00 !important;
+  color: #fff !important;
+  border: 2px solid white;
+  border-radius: 16px !important;
+  padding: 8px 10px !important;
+  font-family: "Rowdies";
+  font-weight: bold;
+  font-size: 0.8rem;
 }
