@@ -15,7 +15,39 @@ export default function ARScene({ path, animalPaths = [] }) {
   useEffect(() => {
     // REGISTER MAKE-UNLIT (Shortened for clarity, keep your existing logic here)
     if (typeof window !== "undefined" && window.AFRAME && !window.AFRAME.components["make-unlit"]) {
-      window.AFRAME.registerComponent("make-unlit", { /* ... your logic ... */ });
+        window.AFRAME.registerComponent("make-unlit", {
+          init: function () {
+            this.el.addEventListener("model-loaded", () => {
+              const obj = this.el.getObject3D("mesh");
+              if (!obj) return;
+
+              obj.traverse((node) => {
+                if (node.isMesh && node.material) {
+                  // 1. Grab original texture
+                  const texture = node.material.map;
+                  const color = node.material.color;
+
+                  // 2. Create a cheap "Basic" material (no lights needed)
+                  const newMat = new window.AFRAME.THREE.MeshBasicMaterial({
+                    color: color, 
+                    map: texture,
+                    side: window.AFRAME.THREE.DoubleSide,
+                    transparent: node.material.transparent,
+                    alphaTest: 0.5 
+                  });
+
+                  // 3. Fix encoding if texture exists
+                  if (texture) {
+                    texture.encoding = window.AFRAME.THREE.sRGBEncoding;
+                  }
+
+                  node.material = newMat;
+                }
+              });
+            });
+          },
+        });
+      
     }
 
     const onTargetFound = (event) => {
@@ -119,7 +151,7 @@ export default function ARScene({ path, animalPaths = [] }) {
             <a-gltf-model
               src={modelUrl}
               scale="0.8 0.8 0.8"
-              position="0 -0.7 0"
+              position="0 -0.7 0.1"
               animation-mixer
               make-unlit
             ></a-gltf-model>
