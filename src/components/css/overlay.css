@@ -343,12 +343,57 @@
 /* Estilo base (Móviles estándar) */
 .introduccion {
   position: fixed;
+  pointer-events: none;
   inset: 0;
-  z-index: 3;
+  z-index: 4;
   pointer-events: none; /* important for camera gestures */
     background: 
     #000 
     url('/overlay/intro-md.png') 
     center / contain 
     no-repeat;
+}
+
+.intro-ui {
+  position: fixed;
+  inset: 0;
+  z-index: 4;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+
+  padding-bottom: 6vh;
+  pointer-events: auto;
+}
+
+.intro-button {
+  background-color: #E68C00;
+  border: 2px solid white;
+  width: 35%;
+  padding: 14px;
+  color: white;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  font-family: Rowdies;
+
+  position: absolute;
+    bottom: 20%;
+
+  left: 32.5%;
+}
+
+
+
+@media (min-height: 701px) and (max-height: 820px) {
+  .intro-button {
+    bottom: 15%;
+  }
+}
+
+
+@media (min-height: 781px) and (max-height: 820px) and (max-width: 360px)   {
+  .intro-button {
+    bottom: 25%;
+  }
 }

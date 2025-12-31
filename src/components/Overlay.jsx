@@ -81,15 +81,15 @@ export default function UIOverlay() {
             </div>
           </div>
         ) : 
-        
-                  <div className='introduccion'>
-
-            <button style={{backgroundColor:"#E68C00", border:"2px solid white", width:"30%" ,padding:10 ,color:'white', borderRadius:"10px", position:'absolute', bottom:"15%", left:"35%"}} onClick={handleClick} ><b>¡Empezar!</b></button>
-
-
+        <>
+            <div className='introduccion'>
 
           </div>
-        
+          <div class="intro-ui">
+              <button className='intro-button' onClick={handleClick} ><b>¡Empezar!</b></button>
+          </div>
+
+        </>
         }
 
         </>
