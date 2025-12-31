@@ -102,9 +102,9 @@ export default function UIOverlay() {
     <div style={{ position: 'absolute', zIndex: 10, top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none' }}>
 
       {/* HUD Header */}
-      <div style={{ pointerEvents: 'auto', padding: 10, display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{ pointerEvents: 'auto', padding: 10, paddingLeft:30, display: 'flex', justifyContent: 'space-between' }}>
         <button className='HUDheader' onClick={() => setShowProgress(true)}>
-          <img width={40} height={40} src='/overlay/logo.png'></img>
+          <img width={26} height={26} src='/overlay/logo.png'></img>
           <div style={{marginLeft:"10%" }}>EXPLORA ZOO</div>
         </button>
         
