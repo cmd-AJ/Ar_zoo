@@ -61,6 +61,7 @@ export const GameProvider = ({ children }) => {
           confirmButtonText: 'Usuario registrado',
           customClass: {
           container: 'my-swal-container',
+          popup: 'swal-custom-popup',
           title: 'my-swal-title',
           confirmButton: 'my-swal-button',
       }

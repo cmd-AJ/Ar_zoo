@@ -85,7 +85,7 @@ export default function UIOverlay() {
             <div className='introduccion'>
 
           </div>
-          <div class="intro-ui">
+          <div className="intro-ui">
               <button className='intro-button' onClick={handleClick} ><b>¡Empezar!</b></button>
           </div>
 
