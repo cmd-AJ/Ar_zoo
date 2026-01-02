@@ -371,14 +371,17 @@
   background-color: #E68C00;
   border: 2px solid white;
   width: 35%;
-  padding: 14px;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 3vw;
+  padding-bottom: 3vw;
   color: white;
   border-radius: 15px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   font-family: Rowdies;
 
   position: absolute;
-    bottom: 20%;
+    bottom: 18%;
 
   left: 32.5%;
 }
