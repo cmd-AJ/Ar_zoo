@@ -151,7 +151,7 @@ export default function ARScene({ path, animalPaths = [] }) {
             <a-gltf-model
               src={modelUrl}
               scale="0.8 0.8 0.8"
-              position="0 -0.7 0.1"
+              position="0 -0.7 0"
               animation-mixer
               make-unlit
             ></a-gltf-model>
